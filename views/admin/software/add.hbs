@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/admin/assets/css/style.css" />
+    <link rel="stylesheet" href="/admin/assets/css/tailwind.output.css" />
+    <style>
+       .description .ck-editor__editable[role="textbox"] {
+            /* editing area */
+            min-height: 500px;
+        }
+
+        .change-log .ck-editor__editable[role="textbox"] {
+            /* editing area */
+            min-height: 200px;
+        }
+
+        .ck-content .image {
+            /* block images */
+            margin: 20px auto;
+        }
+
+        .grid-cols-7 {
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        {{> admin/nav }}
+        <div class="flex flex-col flex-1 w-full">
+            {{>admin/header}}
+            <main class="h-full overflow-y-auto">
+                <div class="container px-6 mx-auto grid">
+                    <div class="flex flex-row justify-between">
+                        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                            Add New Software
+                        </h2>
+                    </div>
+                </div>
+                <div class="w-full px-6 overflow-hidden">
+                    <div class=" px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <form>
+                            {{!-- Start input title --}}
+                            <div class="grid gap-6 mb-6 md:grid-cols-3">
+                                <div>
+                                    <label for="input_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Software
+                                        Name</label>
+                                    <input type="text" id="input_name"
+                                        class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="input_version"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Software
+                                        Version</label>
+                                    <input type="text" id="input_version"
+                                        class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="input_additional_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Additional
+                                        Title</label>
+                                    <input type="text" id="input_additional_name"
+                                        class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                            </div>
+                            {{!-- End input title --}}
+                            {{!-- Start input author --}}
+                            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                                <div>
+                                    <label for="input_author_url"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Software
+                                        Author Name</label>
+                                    <input type="text" id="input_author_name"
+                                        class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="input_author_url"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Software
+                                        Author Url</label>
+                                    <input type="text" id="input_author_url"
+                                        class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </div>
+                            </div>
+                            {{!-- End input author --}}
+                            <div class="grid gap-6 mb-6 md:grid-cols-3">
+                                {{!-- Start ckEditor --}}
+                                <div class="col-span-2">
+                                    <div class="mb-6 description">
+                                        <label for="description"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
+                                        <div id="description"></div>
+                                    </div>
+                                    <div class="mb-6 change-log">
+                                        <label for="description"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Change
+                                            Log</label>
+                                        <div id="change_log"></div>
+                                    </div>
+                                </div>
+                                {{!-- End ckEditor --}}
+                                <div>
+                                    <div class="mb-6">
+                                        <label for="category"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                                            Software Category</label>
+                                        <select id="category"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="" selected>Choose Category</option>
+                                            {{#each categories}}
+                                            <option value="{{slug}}">{{name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="input_author_url"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Requirement</label>
+                                        <input type="text" id="input_author_name"
+                                            class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="input_author_url"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Language</label>
+                                        <input type="text" id="input_author_url"
+                                            class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div>
+                                    <div class="mb-6">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                            for="file_input">Software Icon</label>
+                                        <input
+                                            class="block w-full p-1 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            aria-describedby="file_input_help" id="file_input" type="file">
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
+                                            PNG|JPG</p>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="license"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                                            License</label>
+                                        <select id="license"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="Freeware">Freeware</option>
+                                            <option value="Open Source">Open Source</option>
+                                            <option value="Trial">Trial</option>
+                                            <option value="Freemium">Freemium</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="message"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Excerpt</label>
+                                        <textarea id="message" rows="2"
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Short Description 70 char only" maxlength="70"></textarea>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                            for="file_input_screenshot">Software Screenshot</label>
+                                        <input
+                                            class="block w-full p-1 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            aria-describedby="file_input_screenshot_help" id="file_input_screenshot" type="file" multiple>
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_screenshot_help">
+                                            PNG|JPG</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="/admin/assets/js/init-alpine.js"></script>
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/datepicker.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#change_log'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+
+</html>
